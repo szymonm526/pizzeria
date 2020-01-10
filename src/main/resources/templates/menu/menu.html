@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'menu')}">
+
+  <body>
+
+    <h2>Menu</h2>
+
+    <table id="Menu" class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width: 150px;">Nazwa</th>
+          <th style="width: 150px;">Opis</th>
+          <th style="width: 150px;">Cena</th>
+          <th style="width: 150px;">Ilosc</th>
+          <th style="width: 150px;">Dodaj</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="pizza : ${#lists.sort(pizzadd)}">
+
+          <td th:text="${pizza.name}"/>
+          <td th:text="${pizza.description}"/>
+          <td th:text="${pizza.price} + 'zl'"/>
+          <form action="#" th:action="@{/cart/add/}" method="post">
+           <td> <input type="text" name="pizza_quantity"/></td>
+            <input type="hidden"  name="pizza_id" th:value="${pizza.id}">
+            <input type="hidden"  name="location" class="location" value=""/>
+            <td><button th:id="'table_entry_childs_button_' + ${pizza.id}" type="submit">
+              <i>dodaj</i>
+            </button></td>
+          </form>
+
+          <!--<td th:text="${pizza.price}"/>
+          <td><a href="#" th:href="@{'/cart/add/' + ${pizza.id}}">Add</a></td>-->
+
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
