@@ -2,13 +2,21 @@ jQuery(document).ready(function($){
     //if you change this breakpoint in the style.css file (or _layout.scss if you use SASS), don't forget to update this value as well
 
         $cart_trigger = $('#cd-cart-trigger'),
-        $lateral_cart = $('#cd-cart'),
+            $cart_trigger2 = $('#cd-cart-trigger2'),
+            $lateral_cart = $('#cd-cart'),
         $shadow_layer = $('#cd-shadow-layer');
    //document.getElementsByClassName('location').value = document.location.href
 
 
     //open cart
     $cart_trigger.on('click', function(event){
+        event.preventDefault();
+        //close lateral menu (if it's open)
+        //$menu_navigation.removeClass('speed-in');
+        toggle_panel_visibility($lateral_cart, $shadow_layer, $('body'));
+    });
+
+    $cart_trigger2.on('click', function(event){
         event.preventDefault();
         //close lateral menu (if it's open)
         //$menu_navigation.removeClass('speed-in');

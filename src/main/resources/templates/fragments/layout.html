@@ -57,9 +57,14 @@
                     <span>Menu</span>
                 </li>
 
-                <li th:replace="::menuItem ('/vets.html','vets','veterinarians','th-list','O nas')">
+                <li th:replace="::menuItem ('/onas','onas','onas','th-list','O nas')">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Veterinarians</span>
+                </li>
+
+                <li th:replace="::menuItem ('/login','vets','veterinarians','th-list','Zaloguj')">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Logowanie</span>
                 </li>
 
                 <li>
@@ -97,7 +102,7 @@
                 <p>Total <span th:text="${session.price} + 'zl'" >$39.96</span></p>
             </div> <!-- cd-cart-total -->
 
-            <form action="#" th:action="@{/cart/submit}" method="post">
+            <form action="#" th:action="@{/cart/submitClient}" method="post">
             <!--<a href="#0" th:href="@{'/cart/submit'}" class="checkout-btn">Checkout</a>-->
 
                 <input type="text"  name="address" value="Podaj adres">

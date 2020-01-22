@@ -47,6 +47,11 @@
                     </a>
                 </li>
 
+                <li th:replace="::menuItem ('/kelner','zamowienia','zamowienia','zamowienia','Zamowienia do wydania')">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <span>Home</span>
+                </li>
+
                 <li th:replace="::menuItem ('/kelner/zamowienie','zamowienia','zamowienia','zamowienia','Stworz Zamowienie')">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     <span>Home</span>
@@ -90,7 +95,7 @@
                 <p>Total <span th:text="${session.price} + 'zl'" >$39.96</span></p>
             </div> <!-- cd-cart-total -->
 
-            <form action="#" th:action="@{/cart/submit}" method="post">
+            <form action="#" th:action="@{/cart/submitKelner}" method="post">
                 <!--<a href="#0" th:href="@{'/cart/submit'}" class="checkout-btn">Checkout</a>-->
 
                 <input type="text"  name="address" value="Podaj stolik">

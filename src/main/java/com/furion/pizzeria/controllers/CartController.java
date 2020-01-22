@@ -1,8 +1,10 @@
 package com.furion.pizzeria.controllers;
 
 
+import com.furion.pizzeria.models.Budget;
 import com.furion.pizzeria.models.ClientOrder;
 import com.furion.pizzeria.models.Item;
+import com.furion.pizzeria.repositories.BudgetRepository;
 import com.furion.pizzeria.repositories.OrderRepository;
 import com.furion.pizzeria.repositories.PizzaRepository;
 import jdk.nashorn.internal.ir.RuntimeNode;
@@ -24,8 +26,10 @@ public class CartController {
 
     private final PizzaRepository pizzaRepository;
     private final OrderRepository orderRepository;
+    private final BudgetRepository budgetRepository;
 
-    public CartController(PizzaRepository pizzaRepository, OrderRepository orderRepository) {
+    public CartController(PizzaRepository pizzaRepository, OrderRepository orderRepository, BudgetRepository budgetRepository) {
+        this.budgetRepository = budgetRepository;
         this.pizzaRepository = pizzaRepository;
         this.orderRepository = orderRepository;
     }
@@ -99,9 +103,10 @@ public class CartController {
         return -1;
     }
 
-    @RequestMapping(value = "/cart/submit", method = RequestMethod.POST)
-    public String submitCart(HttpServletRequest request, HttpSession session) {
+    @RequestMapping(value = "/cart/submitClient", method = RequestMethod.POST)
+    public String submitCartClient(HttpServletRequest request, HttpSession session) {
         List<Item> cart = (List<Item>) session.getAttribute("cart");
+        BigDecimal price = (BigDecimal) session.getAttribute("price"); //glupi pomysl
         String address = (String) request.getParameter("address");
         String url = (String) request.getParameter("location");
         System.out.println(url);
@@ -114,9 +119,46 @@ public class CartController {
                         Calendar.getInstance((TimeZone.getTimeZone("UTC"))),
                         false
                 );
+
+
+
                 orderRepository.save(o);
             }
         }
+
+        Budget mainBudget =  budgetRepository.findBudgetByName("mainbudget");
+        mainBudget.setMoney(mainBudget.getMoney().add(price));
+        budgetRepository.save(mainBudget);
+
+        return "redirect:"+url;
+    }
+
+    @RequestMapping(value = "/cart/submitKelner", method = RequestMethod.POST)//powtorzenie
+    public String submitCartKelner(HttpServletRequest request, HttpSession session) {
+        List<Item> cart = (List<Item>) session.getAttribute("cart");
+        BigDecimal price = (BigDecimal) session.getAttribute("price"); //glupi pomysl
+        String address = (String) request.getParameter("address");
+        String url = (String) request.getParameter("location");
+        System.out.println(url);
+        for (Item i:cart) {
+            for(int cnt = 0; cnt<i.getQuantity();cnt++) {
+                ClientOrder o = new ClientOrder(
+                        i.getPizza(),
+                        address,
+                        0,
+                        Calendar.getInstance((TimeZone.getTimeZone("UTC"))),
+                        true
+                );
+
+
+
+                orderRepository.save(o);
+            }
+        }
+
+        Budget mainBudget =  budgetRepository.findBudgetByName("mainbudget");
+        mainBudget.setMoney(mainBudget.getMoney().add(price));
+        budgetRepository.save(mainBudget);
 
         return "redirect:"+url;
     }

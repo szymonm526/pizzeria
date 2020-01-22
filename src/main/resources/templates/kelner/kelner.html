@@ -4,8 +4,30 @@
 
 <body>
 
-
 <h2>Aktualne zamowienia</h2>
 
+<table id="Menu" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">Nazwa</th>
+        <th style="width: 150px;">Klient</th>
+        <th style="width: 150px;">Wydawanie</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.pizza.name}"/>
+        <td th:text="${order.address}"/>
+        <form action="#" th:action="@{/kelner/update}" method="post">
+            <input type="hidden"  name="order_id" th:value="${order.id}">
+            <td><button th:id="'table_entry_childs_button_' + ${order.id}" type="submit">
+                <i>wydaj</i>
+            </button></td>
+        </form>
+
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

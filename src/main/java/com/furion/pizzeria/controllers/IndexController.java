@@ -13,4 +13,10 @@ public class IndexController {
     {
         return "index";
     }
+
+    @GetMapping({"/onas", "onas"})
+    public String getONas()
+    {
+        return "onas";
+    }
 }
