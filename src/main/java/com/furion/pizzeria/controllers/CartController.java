@@ -89,8 +89,11 @@ public class CartController {
                     session.setAttribute("cart", cart);
                     session.setAttribute("price", price);
                 }
+                return "redirect:"+url;
             }
-            return "redirect:"+url;
+            else {
+                return "redirect:" + url + "/error";
+            }
         }catch (Exception e)
         {
             return "redirect:" + url + "/error";
