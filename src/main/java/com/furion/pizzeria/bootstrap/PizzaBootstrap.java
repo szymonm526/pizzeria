@@ -40,7 +40,7 @@ public class PizzaBootstrap implements ApplicationListener<ContextRefreshedEvent
         Ingredient ser = new Ingredient("ser", 1000L);
         Ingredient szynka = new Ingredient("szynka",1000L);
         Ingredient papryka = new Ingredient("papryka",1000L);
-        Ingredient ciasto = new Ingredient("ciasto", 10L);
+        Ingredient ciasto = new Ingredient("ciasto", 5L);
 
         ingredientRepository.save(papryka);
         ingredientRepository.save(ananas);
@@ -55,7 +55,7 @@ public class PizzaBootstrap implements ApplicationListener<ContextRefreshedEvent
         ingredientRepository.save(ciasto);
 
 
-        Pizza pizzaPepperoni = new Pizza("Pepperoni", "[opis]", new BigDecimal("20.0"),
+        Pizza pizzaPepperoni = new Pizza("Pepperoni", "[opis Pepperoni]", new BigDecimal("15.0"),
                 new IngredientMapping(ciasto,1L),
                 new IngredientMapping(sosPomidorowy, 10L),
                 new IngredientMapping(mozzarella,10L),
@@ -63,7 +63,7 @@ public class PizzaBootstrap implements ApplicationListener<ContextRefreshedEvent
                 new IngredientMapping(peperoni,20L)
         );
 
-        Pizza pizzaCapricciosa = new Pizza("Capricciosa", "[opis]",new BigDecimal("20.0"),
+        Pizza pizzaCapricciosa = new Pizza("Capricciosa", "[opis Capricciosa]",new BigDecimal("20.0"),
                 new IngredientMapping(ciasto,1L),
                 new IngredientMapping(sosPomidorowy, 10L),
                 new IngredientMapping(mozzarella,10L),
@@ -71,7 +71,7 @@ public class PizzaBootstrap implements ApplicationListener<ContextRefreshedEvent
                 new IngredientMapping(pieczarki,10L)
         );
 
-        Pizza pizzaHawajska = new Pizza("Hawajska", "[opis]",new BigDecimal("20.0"),
+        Pizza pizzaHawajska = new Pizza("Hawajska", "[opis Hawajska]",new BigDecimal("25.0"),
                 new IngredientMapping(ciasto,1L),
                 new IngredientMapping(sosPomidorowy, 10L),
                 new IngredientMapping(mozzarella,10L),
@@ -79,7 +79,7 @@ public class PizzaBootstrap implements ApplicationListener<ContextRefreshedEvent
                 new IngredientMapping(ananas,10L)
         );
 
-        Pizza pizzaMoja = new Pizza("Salame", "[opis]",new BigDecimal("20.0"),
+        Pizza pizzaMoja = new Pizza("Salame", "[opis Salame]",new BigDecimal("20.0"),
                 new IngredientMapping(ciasto,1L),
                 new IngredientMapping(sosPomidorowy,10L),
                 new IngredientMapping(szynka, 10L),

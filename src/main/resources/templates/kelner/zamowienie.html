@@ -25,11 +25,11 @@
         <td th:text="${pizza.description}"/>
         <td th:text="${pizza.price} + 'zl'"/>
         <form action="#" th:action="@{/cart/add/}" method="post">
-            <td> <input type="text" name="pizza_quantity"/></td>
+            <td> <input type="text" value="1" name="pizza_quantity"/></td>
             <input type="hidden"  name="pizza_id" th:value="${pizza.id}">
             <input type="hidden" class="location" name="location" value=""/>
-            <td><button th:id="'table_entry_childs_button_' + ${pizza.id}" type="submit">
-                <i>dodaj</i>
+            <td><button class="btn btn-primary" th:id="'table_entry_childs_button_' + ${pizza.id}" type="submit">
+                Dodaj
             </button></td>
         </form>
 
@@ -39,6 +39,8 @@
     </tr>
     </tbody>
 </table>
+<button type="button" class="btn btn-success pull-right"  id="cd-cart-trigger2" href="#0" title="cart">Zamów</button>
+
 
 <script th:src="@{/resources/js/setLocation.js}"></script> <!-- Gem jQuery -->
 </body>

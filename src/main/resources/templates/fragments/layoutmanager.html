@@ -47,33 +47,25 @@
                     </a>
                 </li>
 
-                <li th:replace="::menuItem ('/','home','strona główna','home','strona główna')">
+                <li th:replace="::menuItem ('/manager','zamowienia','zamowienia','zamowienia','Budzet')">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     <span>Home</span>
                 </li>
 
-                <li th:replace="::menuItem ('/menu','owners','menu','search','Menu')">
+                <li th:replace="::menuItem ('/manager/historia','zamowienia','zamowienia','zamowienia','Historia zamowien')">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <span>Home</span>
+                </li>
+
+                <li th:replace="::menuItem ('/manager/skladniki','zamowienia','zamowienia','zamowienia','Magazyn')">
+                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                    <span>Home</span>
+                </li>
+
+                <li th:replace="::menuItem ('/logout','owners','menu','search','wyloguj')">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Menu</span>
                 </li>
-
-                <li th:replace="::menuItem ('/onas','onas','onas','th-list','O nas')">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Veterinarians</span>
-                </li>
-
-                <li th:replace="::menuItem ('/login','vets','veterinarians','th-list','Zaloguj')">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Logowanie</span>
-                </li>
-
-                <li>
-                    <a id="cd-cart-trigger" href="#0" title="cart">
-                        <span class="glyphicon  glyphicon-shopping-cart" aria-hidden="true"></span>
-                        <span>Finalizacja zamówienia</span>
-                    </a>
-                </li>
-
 
             </ul>
         </div>
@@ -83,36 +75,6 @@
     <div class="container xd-container">
 
         <th:block th:include="${template}"/>
-
-
-        <div id="cd-shadow-layer"></div>
-
-        <div id="cd-cart">
-            <h2>Koszyk</h2>
-            <ul class="cd-cart-items" >
-                <li th:each="item : ${session.cart}" th:unless="${session == null}">
-                    <span class="cd-qty" th:text="${item.quantity} + 'x'">1x</span> <a th:text="${item.pizza.name}">Product Name</a>
-                    <div class="cd-price" th:with="result=${item.pizza.price * item.quantity}"> <span th:text="${result} +'zl'"></span></div>
-                    <a href="#0" class="cd-item-remove cd-img-replace" th:onclick="'javascript: deleteItem(' + ${item.pizza.id} + ')'">Remove</a>
-                </li>
-
-
-            </ul> <!-- cd-cart-items -->
-
-            <div class="cd-cart-total">
-                <p>Total <span th:text="${session.price} + 'zl'" >$39.96</span></p>
-            </div> <!-- cd-cart-total -->
-
-            <form id="submitForm" action="#" th:action="@{/cart/submitClient}" method="post">
-            <!--<a href="#0" th:href="@{'/cart/submit'}" class="checkout-btn">Checkout</a>-->
-
-                <input type="text"  name="address" value="Podaj adres">
-                <!--<input type="hidden" class="location" name="location" value=""/>-->
-                <input type="submit" value="Zatwierdz" class="checkout-btn">
-            </form>
-            <!--<a href="#" th:href="@{'/cart/add/' + ${pizza.id}}">-->
-        </div> <!-- cd-cart -->
-
 
         <br/>
         <br/>
@@ -126,13 +88,9 @@
     </div>
 </div>
 
-
-
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/resources/js/setLocation.js}"></script> <!-- Gem jQuery -->
-<script th:src="@{/resources/js/cart.js}"></script> <!-- Gem jQuery -->
 </body>
 
 </html>

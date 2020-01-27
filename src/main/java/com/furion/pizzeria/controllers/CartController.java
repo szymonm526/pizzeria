@@ -1,9 +1,7 @@
 package com.furion.pizzeria.controllers;
 
 
-import com.furion.pizzeria.models.Budget;
-import com.furion.pizzeria.models.ClientOrder;
-import com.furion.pizzeria.models.Item;
+import com.furion.pizzeria.models.*;
 import com.furion.pizzeria.repositories.BudgetRepository;
 import com.furion.pizzeria.repositories.OrderRepository;
 import com.furion.pizzeria.repositories.PizzaRepository;
@@ -11,14 +9,13 @@ import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 
 @Controller
@@ -108,8 +105,7 @@ public class CartController {
         List<Item> cart = (List<Item>) session.getAttribute("cart");
         BigDecimal price = (BigDecimal) session.getAttribute("price"); //glupi pomysl
         String address = (String) request.getParameter("address");
-        String url = (String) request.getParameter("location");
-        System.out.println(url);
+       // String url = (String) request.getParameter("location");
         for (Item i:cart) {
             for(int cnt = 0; cnt<i.getQuantity();cnt++) {
                 ClientOrder o = new ClientOrder(
@@ -129,8 +125,8 @@ public class CartController {
         Budget mainBudget =  budgetRepository.findBudgetByName("mainbudget");
         mainBudget.setMoney(mainBudget.getMoney().add(price));
         budgetRepository.save(mainBudget);
-
-        return "redirect:"+url;
+        return "sukces";
+        //return "redirect:/suckes";
     }
 
     @RequestMapping(value = "/cart/submitKelner", method = RequestMethod.POST)//powtorzenie
@@ -138,8 +134,7 @@ public class CartController {
         List<Item> cart = (List<Item>) session.getAttribute("cart");
         BigDecimal price = (BigDecimal) session.getAttribute("price"); //glupi pomysl
         String address = (String) request.getParameter("address");
-        String url = (String) request.getParameter("location");
-        System.out.println(url);
+        //String url = (String) request.getParameter("location");
         for (Item i:cart) {
             for(int cnt = 0; cnt<i.getQuantity();cnt++) {
                 ClientOrder o = new ClientOrder(
@@ -159,8 +154,31 @@ public class CartController {
         Budget mainBudget =  budgetRepository.findBudgetByName("mainbudget");
         mainBudget.setMoney(mainBudget.getMoney().add(price));
         budgetRepository.save(mainBudget);
+        return "kelner/sukces";
+        //return "redirect:/kelner/sukces";
+    }
 
-        return "redirect:"+url;
+    @RequestMapping(value="/cart/delete" , method=RequestMethod.POST)
+    @ResponseBody
+    public void process(@RequestParam("pizzaId") Integer id, HttpSession session) {
+       // System.out.println(id);
+        List<Item> cart = (List<Item>) session.getAttribute("cart");
+        BigDecimal price = (BigDecimal) session.getAttribute("price"); //glupi pomysl
+
+        for (Item i:cart) {
+            if(i.getPizza().getId() == (long)id)
+            {
+
+                BigDecimal toCut = i.getPizza().getPrice().multiply(new BigDecimal(i.getQuantity()));
+                price = price.subtract(toCut);
+                cart.remove(i);
+                break;
+            }
+        }
+        if(!cart.isEmpty())
+            session.setAttribute("cart", cart);
+        session.setAttribute("price",price);
+
     }
 
 }

@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
 
-    <title>Pizzeria jakas</title>
+    <title>Pizzeria</title>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -52,7 +52,7 @@
                     <span>Home</span>
                 </li>
 
-                <li th:replace="::menuItem ('/kelner/zamowienie','zamowienia','zamowienia','zamowienia','Stworz Zamowienie')">
+                <li th:replace="::menuItem ('/kelner/zamowienie','zamowienia','zamowienia','zamowienia','Stworz zamowienie')">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     <span>Home</span>
                 </li>
@@ -62,9 +62,9 @@
                     <span>Menu</span>
                 </li>
                 <li>
-                    <a id="cd-cart-trigger" href="#0" title="cart">
+                    <a id="cd-cart-trigger" href="#0" title="Finalizuj zamowienie">
                         <span class="glyphicon  glyphicon-shopping-cart" aria-hidden="true"></span>
-                        <span>cart</span>
+                        <span>Finalizuj zamowienie</span>
                     </a>
                 </li>
 
@@ -81,12 +81,12 @@
         <div id="cd-shadow-layer"></div>
 
         <div id="cd-cart">
-            <h2>Cart</h2>
+            <h2>Koszyk</h2>
             <ul class="cd-cart-items" >
                 <li th:each="item : ${session.cart}" th:unless="${session == null}">
                     <span class="cd-qty" th:text="${item.quantity} + 'x'">1x</span> <a th:text="${item.pizza.name}">Product Name</a>
                     <div class="cd-price" th:with="result=${item.pizza.price * item.quantity}"> <span th:text="${result} +'zl'"></span></div>
-                    <a href="#0" class="cd-item-remove cd-img-replace">Remove</a>
+                    <a href="#0" class="cd-item-remove cd-img-replace" th:onclick="'javascript: deleteItem(' + ${item.pizza.id} + ')'">Remove</a>
                 </li>
 
             </ul> <!-- cd-cart-items -->
@@ -98,9 +98,15 @@
             <form action="#" th:action="@{/cart/submitKelner}" method="post">
                 <!--<a href="#0" th:href="@{'/cart/submit'}" class="checkout-btn">Checkout</a>-->
 
-                <input type="text"  name="address" value="Podaj stolik">
-                <input type="hidden" class="location" name="location" value=""/>
-                <input type="submit" value="Checkout" class="checkout-btn">
+                <!--<input type="text"  name="address" value="Podaj stolik">-->
+                <select name="address">
+                    <option value="stolik nr1">stolik nr1</option>
+                    <option value="stolik nr2">stolik nr2</option>
+                    <option value="stolik nr3">stolik nr3</option>
+                    <option value="stolik nr4">stolik nr4</option>
+                </select>
+                <!-- <input type="hidden" class="location" name="location" value=""/>-->
+                <input type="submit" value="Zatwierdz" class="checkout-btn">
             </form>
             <!--<a href="#" th:href="@{'/cart/add/' + ${pizza.id}}">-->
         </div> <!-- cd-cart -->

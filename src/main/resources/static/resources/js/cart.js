@@ -5,7 +5,10 @@ jQuery(document).ready(function($){
             $cart_trigger2 = $('#cd-cart-trigger2'),
             $lateral_cart = $('#cd-cart'),
         $shadow_layer = $('#cd-shadow-layer');
-   //document.getElementsByClassName('location').value = document.location.href
+
+
+
+
 
 
     //open cart
@@ -59,3 +62,19 @@ function toggle_panel_visibility ($lateral_panel, $background_layer, $body) {
     }
 }
 
+function deleteItem(i1)
+{
+    console.log("clicked on submit button");
+
+    var data = {"pizzaId":i1}
+
+    $.ajax({
+        type: "POST",
+        url: "/cart/delete",
+        data:data,
+        success :function(result) {
+            console.log("succs");
+            location.reload();
+        }
+    });
+}
