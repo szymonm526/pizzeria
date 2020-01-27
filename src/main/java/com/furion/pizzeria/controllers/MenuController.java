@@ -44,4 +44,10 @@ public class MenuController {
         return "menu/menu";
     }
 
+    @GetMapping({"/menu/error"})
+    public String error(Model model)
+    {
+        return "/menu/error";
+    }
+
 }

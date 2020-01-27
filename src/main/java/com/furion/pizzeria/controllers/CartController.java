@@ -58,37 +58,44 @@ public class CartController {
     public String addToCart(HttpServletRequest request, HttpSession session){
         // this way you get value of the input you want
         System.out.println("in cart controller form");
+        String url = (String) request.getParameter("location");
+        try {
         int q = Integer.parseInt(request.getParameter("pizza_quantity"));
         Long id = Long.parseLong(request.getParameter("pizza_id"));
-        String url = (String) request.getParameter("location");
 
-        if (session.getAttribute("cart") == null) {
-            List<Item> cart = new ArrayList<Item>();
-            cart.add(new Item(pizzaRepository.findById(id).get(), q));
-            BigDecimal price = new BigDecimal("0.0");
-            price = price.add(new BigDecimal(pizzaRepository.findById(id).get().getPrice().toString()));
-            price = price.multiply(new BigDecimal(Integer.toString(q)));
-            session.setAttribute("cart", cart);
-            session.setAttribute("price", price);
-        } else {
-            List<Item> cart = (List<Item>) session.getAttribute("cart");
-            BigDecimal price = (BigDecimal) session.getAttribute("price");
-            int index = this.exists(id, cart);
-            if (index == -1) {
-                cart.add(new Item(pizzaRepository.findById(id).get(), q));
-            } else {
-                int quantity = cart.get(index).getQuantity() + q;
-                cart.get(index).setQuantity(quantity);
+            if (q > 0) {
+                if (session.getAttribute("cart") == null) {
+                    List<Item> cart = new ArrayList<Item>();
+                    cart.add(new Item(pizzaRepository.findById(id).get(), q));
+                    BigDecimal price = new BigDecimal("0.0");
+                    price = price.add(new BigDecimal(pizzaRepository.findById(id).get().getPrice().toString()));
+                    price = price.multiply(new BigDecimal(Integer.toString(q)));
+                    session.setAttribute("cart", cart);
+                    session.setAttribute("price", price);
+                } else {
+                    List<Item> cart = (List<Item>) session.getAttribute("cart");
+                    BigDecimal price = (BigDecimal) session.getAttribute("price");
+                    int index = this.exists(id, cart);
+                    if (index == -1) {
+                        cart.add(new Item(pizzaRepository.findById(id).get(), q));
+                    } else {
+                        int quantity = cart.get(index).getQuantity() + q;
+                        cart.get(index).setQuantity(quantity);
+                    }
+                    BigDecimal temp = new BigDecimal("0.0");
+                    temp = temp.add(new BigDecimal(pizzaRepository.findById(id).get().getPrice().toString()));
+                    temp = temp.multiply(new BigDecimal(Integer.toString(q)));
+                    price = price.add(temp);
+                    session.setAttribute("cart", cart);
+                    session.setAttribute("price", price);
+                }
             }
-            BigDecimal temp = new BigDecimal("0.0");
-            temp = temp.add(new BigDecimal(pizzaRepository.findById(id).get().getPrice().toString()));
-            temp = temp.multiply(new BigDecimal(Integer.toString(q)));
-            price = price.add(temp);
-            session.setAttribute("cart", cart);
-            session.setAttribute("price", price);
+            return "redirect:"+url;
+        }catch (Exception e)
+        {
+            return "redirect:" + url + "/error";
         }
 
-        return "redirect:"+url;
     }
 
     private int exists(Long id, List<Item> cart) {

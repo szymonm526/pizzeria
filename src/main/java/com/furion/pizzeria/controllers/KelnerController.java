@@ -9,6 +9,7 @@ import com.furion.pizzeria.repositories.PizzaRepository;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -52,5 +53,11 @@ public class KelnerController {
         orderToUpdate.setStan(2);
         orderRepository.save(orderToUpdate);
         return "redirect:/kelner";
+    }
+
+    @GetMapping({"/kelner/zamowienie/error"})
+    public String error(Model model)
+    {
+        return "/kelner/error";
     }
 }

@@ -92,7 +92,7 @@
             </ul> <!-- cd-cart-items -->
 
             <div class="cd-cart-total">
-                <p>Total <span th:text="${session.price} + 'zl'" >$39.96</span></p>
+                <p>Total <span th:text="${session.price != null} ? ${session.price} + 'zl' : '0zl'" >$39.96</span></p>
             </div> <!-- cd-cart-total -->
 
             <form action="#" th:action="@{/cart/submitKelner}" method="post">
